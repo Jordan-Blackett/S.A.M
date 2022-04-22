@@ -68,12 +68,13 @@ class max7219():
 
     # Serial interface for S.A.M 8x8 LED matrix controled by a MAX7219 chip - Daisychained 
     
-    def __init__(self, serial_interface=None, daisynum=None, defaultfont=CP437_FONT):
+    def __init__(self, serial_interface=None, daisynum=None, rotated=None, defaultfont=CP437_FONT):
         self.serial_interface = serial_interface
         
         #if daisynum is not None:
         self.daisynum = daisynum or 1
         self.font = defaultfont
+        self.rotated = True
             #self.width = daisynum * 8
             #self.height = 8
         
@@ -116,18 +117,55 @@ class max7219():
         keycodes = [ord(char) for char in keycodes] # Convert message to ord() keycodes
 
         # Using the keycodes pull the 8-byte data/hex decimal (per character) from fonts.py
+        # - Format [[a][b][c][d]]
+        font_matrix = []
+        for i in range(len(keycodes)):
+            font_matrix.append(self.font[keycodes[i]])
         
-        # digit + 1 because the register digits hex's are 0x01 to 0x08 [1-8] not [0-7]
-        for reg_digit in range(8):
-            #Send them in sequence digit/column 0 - 7 to make up a character on the 8x8 LED display 
-            # - each value in the list for each matrices digit/column in the daisy chain
-            # - Dig0 - [0x7C][0x41][0x1C][0x41]
-            # send_data = [[digit+1, self.font[keycodes[matrix] % 0x100][digit]] for matrix in range(self.daisynum)]
-            send_data = []
-            for matrix in range(self.daisynum):
-                send_data = send_data + [reg_digit + 1, self.font[keycodes[matrix] % 0x100][reg_digit]]
+        # Convert font hex decimal/integer bytes to binary and create a bitmap
+        # Loop through each character 8 byte font (each 8x8 matrix)
+        # - Format [[a][b][c][d]]
+        binary_matrix = []
+        for i in range(len(font_matrix)): 
+            binary = []
+            # Loop through each decimal/integer byte
+            for x in range(len(font_matrix[i])):
+                # Convert an integer to an binary string
+                # - 2: Start at position 2 to remove the "0b" prefix
+                # - zfill pads the string (form the left) to prevent deleted leading 0s 
+                byte = font_matrix[i][x]
+                binary.append([int(i) for i in bin(byte)[2:].zfill(8)])
+                if(self.rotated):
+                    # Vodoo magic to rotate bit matrix 90 degrees counterclockwise
+                    rotated_matrix = [[binary[j][i] for j in range(len(binary))] for i in range(len(binary[0])-1,-1,-1)]
+            binary_matrix.append(rotated_matrix)
+
+        # Convert binary string back to integer
+        integer_matrix = []
+        for i in range(len(binary_matrix)):
+            for y in range(8): # byte
+                result = 0
+                for bits in binary_matrix[i][y]:
+                    result = (result << 1) | bits
                 
-            self.send_bytes(send_data)  
+                integer_matrix.append(result)
+        
+        # Convery the integer matrix to MAX7219 chip digit format
+        # - list -> register column
+        send_matrix = [integer_matrix[i::8] for i in range(8)]
+
+        # Insert the chip register digit/column between each integer
+        for register_digit in range(8): # Number of chip digits
+            for i in range(self.daisynum):
+                # - digit + 1 because the register digits hex's are 0x01 to 0x08 [1-8] not [0-7]
+                send_matrix[register_digit].insert(i*2, register_digit + 1)
+                
+        # Send per register/column digit data to the chip
+        # Send them in sequence digit/column 0 - 7 to make up a character on the 8x8 LED display
+        # - each value in the list for each matrices digit/column in the daisy chain
+        # - Dig0 - [0x7C][0x41][0x1C][0x41]
+        for reg_digit in range(8):
+            self.send_bytes(send_matrix[reg_digit])
     
     # -----
     #   Graphic/Draw functions
