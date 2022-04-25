@@ -105,17 +105,17 @@ class max7219():
     # -----
     #   Message functions
     # -----
-    def show_message(self, msg):
+    def show_static_message(self, msg):
         # Send a static message to the matrices array
         # Message will be trimmed/truncated from the right to fit the daisychain size
         message = msg + " " * (self.daisynum - len(msg)) # pad strings shorter then daisynum size
         message = message[:self.daisynum] # trim
-
+        
         # Convert string message to list
         keycodes = []
         keycodes[:0] = message
         keycodes = [ord(char) for char in keycodes] # Convert message to ord() keycodes
-
+        
         # Using the keycodes pull the 8-byte data/hex decimal (per character) from fonts.py
         # - Format [[a][b][c][d]]
         font_matrix = []
@@ -126,8 +126,20 @@ class max7219():
         # Loop through each character 8 byte font (each 8x8 matrix)
         # - Format [[a][b][c][d]]
         binary_matrix = []
+# leading zero's to enable scrolling as we start the text off screen - [0][0][0][0][a][b][c][d]
         for i in range(len(font_matrix)): 
             binary = []
+            # Loop through each decimal/integer byte
+            # - [124, 126, 19, 19, 126, 124, 0, 0], [B], [C] 
+            # =>
+            # [0, 0, 1, 1, 1, 1, 1, 0, 
+            #  0, 1, 1, 1, 1, 1, 1, 0, 
+            #  1, 1, 0, 0, 1, 0, 0, 0, 
+            #  1, 1, 0, 0, 1, 0, 0, 0, 
+            #  0, 1, 1, 1, 1, 1, 1, 0, 
+            #  0, 0, 1, 1, 1, 1, 1, 0, 
+            #  0, 0, 0, 0, 0, 0, 0, 0, 
+            #  0, 0, 0, 0, 0, 0, 0, 0], [B], [C] 
             # Loop through each decimal/integer byte
             for x in range(len(font_matrix[i])):
                 # Convert an integer to an binary string
@@ -135,22 +147,30 @@ class max7219():
                 # - zfill pads the string (form the left) to prevent deleted leading 0s 
                 byte = font_matrix[i][x]
                 binary.append([int(i) for i in bin(byte)[2:].zfill(8)])
-                if(self.rotated):
-                    # Vodoo magic to rotate bit matrix 90 degrees counterclockwise
-                    rotated_matrix = [[binary[j][i] for j in range(len(binary))] for i in range(len(binary[0])-1,-1,-1)]
-            binary_matrix.append(rotated_matrix)
-
+            if(self.rotated):
+                # Vodoo magic to rotate bit matrix 90 degrees counterclockwise
+                rotated_matrix = [binary[j][i] for j in range(len(binary)) for i in range(len(binary[0])-1,-1,-1)]
+            else:
+                binary_matrix.extend(binary)
+                
+            binary_matrix.extend(rotated_matrix)
+            
+        test_matrix = []
+        test_matrix.extend(binary_matrix[i::8] for i in range(8)) # reformat to digit bitmap format from segmented 8x8 lists to 8 x 32
+        
         # Convert binary string back to integer
         integer_matrix = []
-        for i in range(len(binary_matrix)):
-            for y in range(8): # byte
+        offset = 0
+        for x in range(self.daisynum): #daisy chain num
+            for y in range(8): # max7219 digits
                 result = 0
-                for bits in binary_matrix[i][y]:
+                byte = test_matrix[y][(offset + (8 * x)):(offset + (8 * x))+8]
+                for bits in byte:
                     result = (result << 1) | bits
                 
                 integer_matrix.append(result)
-        
-        # Convery the integer matrix to MAX7219 chip digit format
+    
+        # Convert the integer matrix to MAX7219 chip digit format
         # - list -> register column
         send_matrix = [integer_matrix[i::8] for i in range(8)]
 
@@ -166,6 +186,94 @@ class max7219():
         # - Dig0 - [0x7C][0x41][0x1C][0x41]
         for reg_digit in range(8):
             self.send_bytes(send_matrix[reg_digit])
+            
+    def show_message(self, msg):
+        # Send a static message to the matrices array
+        # Message will be trimmed/truncated from the right to fit the daisychain size
+        message = msg + " " * (self.daisynum - len(msg)) # pad strings shorter then daisynum size
+        #message = message[:self.daisynum] # trim
+        
+        # Convert string message to list
+        keycodes = []
+        keycodes[:0] = message
+        keycodes = [ord(char) for char in keycodes] # Convert message to ord() keycodes
+        
+        # Using the keycodes pull the 8-byte data/hex decimal (per character) from fonts.py
+        # - Format [[a][b][c][d]]
+        font_matrix = []
+        for i in range(len(keycodes)):
+            font_matrix.append(self.font[keycodes[i]])
+        
+        # Convert font hex decimal/integer bytes to binary and create a bitmap
+        # Loop through each character 8 byte font (each 8x8 matrix)
+        # - Format [[a][b][c][d]]
+        binary_matrix = []
+        binary_matrix.extend((([0]*8)*8)*4) # leading zero's to enable scrolling as we start the text off screen - [0][0][0][0][a][b][c][d]
+        for i in range(len(font_matrix)): 
+            binary = []
+            # Loop through each decimal/integer byte
+            # - [124, 126, 19, 19, 126, 124, 0, 0], [B], [C] 
+            # =>
+            # [0, 0, 1, 1, 1, 1, 1, 0, 
+            #  0, 1, 1, 1, 1, 1, 1, 0, 
+            #  1, 1, 0, 0, 1, 0, 0, 0, 
+            #  1, 1, 0, 0, 1, 0, 0, 0, 
+            #  0, 1, 1, 1, 1, 1, 1, 0, 
+            #  0, 0, 1, 1, 1, 1, 1, 0, 
+            #  0, 0, 0, 0, 0, 0, 0, 0, 
+            #  0, 0, 0, 0, 0, 0, 0, 0], [B], [C] 
+            # Loop through each decimal/integer byte
+            for x in range(len(font_matrix[i])):
+                # Convert an integer to an binary string
+                # - 2: Start at position 2 to remove the "0b" prefix
+                # - zfill pads the string (form the left) to prevent deleted leading 0s 
+                byte = font_matrix[i][x]
+                binary.append([int(i) for i in bin(byte)[2:].zfill(8)])
+            if(self.rotated):
+                # Vodoo magic to rotate bit matrix 90 degrees counterclockwise
+                rotated_matrix = [binary[j][i] for j in range(len(binary)) for i in range(len(binary[0])-1,-1,-1)]
+            else:
+                binary_matrix.extend(binary)
+                
+            binary_matrix.extend(rotated_matrix)
+            
+        binary_matrix.extend((([0]*8)*8))
+        
+        # Reformat from segmented 8x8 lists to 8x32 list
+        test_matrix = []
+        test_matrix.extend(binary_matrix[i::8] for i in range(8)) 
+        
+        for offset in range(len(test_matrix[0])):
+
+            # Convert binary string back to integer
+            integer_matrix = []
+            for x in range(self.daisynum): #daisy chain num
+                for y in range(8): # max7219 digits
+                    result = 0
+                    byte = test_matrix[y][(offset + (8 * x)):(offset + (8 * x))+8]
+                    for bits in byte:
+                        result = (result << 1) | bits
+                    
+                    integer_matrix.append(result)
+        
+            # Convert the integer matrix to MAX7219 chip digit format
+            # - list -> register column
+            send_matrix = [integer_matrix[i::8] for i in range(8)]
+
+            # Insert the chip register digit/column between each integer
+            for register_digit in range(8): # Number of chip digits
+                for i in range(self.daisynum):
+                    # - digit + 1 because the register digits hex's are 0x01 to 0x08 [1-8] not [0-7]
+                    send_matrix[register_digit].insert(i*2, register_digit + 1)
+                    
+            # Send per register/column digit data to the chip
+            # Send them in sequence digit/column 0 - 7 to make up a character on the 8x8 LED display
+            # - each value in the list for each matrices digit/column in the daisy chain
+            # - Dig0 - [0x7C][0x41][0x1C][0x41]
+            for reg_digit in range(8):
+                self.send_bytes(send_matrix[reg_digit])
+                
+            sleep(0.1)
     
     # -----
     #   Graphic/Draw functions
@@ -202,7 +310,10 @@ def demo():
     SAMDevice = max7219(serial_interface, 4)
     print("Device Init")
     
-    SAMDevice.show_message("hiya")
+    SAMDevice.show_static_message("Hiya")
+    sleep(2)
+    
+    SAMDevice.show_message("Hello World")
     sleep(2)
 
 if __name__ == "__main__":
