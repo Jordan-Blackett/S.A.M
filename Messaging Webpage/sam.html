@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Messaging System</title>
+	<link rel="stylesheet" type="text/css" href="css/max7219_messaging.css?version=1"/>
+	<link rel="icon" href="images/crow_placeholder.png"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+	<meta charset="UTF-8">
+	<meta name="theme-color" content="#332136"/>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="js/max7219_messaging.js"></script>
+</head>
+
+<body>
+	<div class="banner">
+		<h1>S<span>.</span>A<span>.</span>M</h1>
+		<h2>(｡＾･ｪ･＾｡)</h2>
+		<p>Version: 0.8.0</p>
+	</div>
+	<div class="status-banner status-online" id="server-status">
+		<!--<p class="status-version">Version: 1.0.0</p>-->
+		<div>
+			<span class="status-circle"></span>
+		</div>
+		<p class="status-status"></span>System Online! :)</p>
+		<div>
+			<span class="status-circle"></span>
+		</div>
+	</div>
+	<!-- Sprite / Text -->
+	<div class="sprite-text-content-container">
+		<div class="sprite-content-container" id="swap-containers-sprite">
+			<!-- Draw Sprite -->
+			<div class="sprite-generator-container">
+				<div class="sprite-generator-table" id="sprite-table"></div>
+				<button type="button" class="sprite-send-button" id="send-sprite-button">Send!</button>
+			</div>
+			<!-- Sprite Mobile Settings -->
+			<div class="sprite-content-settings" id="mobile-show">
+				<p> < Settings > </p>
+				<div class="t">
+					<p>Scroll Speed:</p>
+					<div class="slidecontainer">
+						<input type="range" min="1" max="10" value="7" class="slider" id="speed" step="1">
+						<span class="range-thumb" id="demo"></span>
+					</div>
+					<div class="break"></div> <!-- break -->
+					<p>Brightness:</p>
+					<div class="slidecontainer">
+						<input type="range" min="1" max="16" value="4" class="slider" id="brightness" step="1">
+						<span class="range-thumb" id="demo"></span>
+					</div>
+					<div class="break"></div> <!-- break -->
+					<p>Brightness:</p>
+					<div class="slidecontainer">
+						<input type="range" min="1" max="16" value="4" class="slider" id="brightness" step="1">
+						<span class="range-thumb" id="demo"></span>
+					</div>
+					<div class="break"></div> <!-- break -->
+				</div>
+			</div>
+		</div>
+		<div class="text-content-container" id="swap-containers-text">
+			<!-- Text Box -->
+			<div class="text-box-container">
+				<div class="text-box-header">
+					<!--<p class="hearts">&#9825;&#9825;&#9825;</p>-->
+					<p> < Enter Text > </p>
+					<textarea class="text-box" name="fname" cols="50" rows="10" id="send-message"></textarea>
+					<button type="button" class="sprite-send-button" id="send-message-button">Send!</button>
+				</div>
+			</div>
+			<!-- Text Mobile Settings -->
+			<div class="text-content-settings" id="mobile-show">
+				<!--<p style="padding-bottom: 5%;"> < Settings > </p>-->
+				<p style="margin-bottom: 10px;"> < Settings > </p>
+				<div class="t">
+					<p> Font: </p>
+					<div class="font-select">
+						<select>
+							<option class="fonts-cp437" id="CP437" value="CP437_FONT">CP437</option>
+							<option class="fonts-cp437" id="CP437" value="CP437_FONT">CP437</option>
+							<!--<option value="LCD_FONT">LCD</option>
+							<option value="SEG7_FONT">SEG7</option>
+							<option value="SINCLAIR_FONT">SINCLAIR</option>
+							<option value="SPECCY_FONT">SPECCY</option>
+							<option class="fonts-tiny" id="tiny" value="TINY_FONT">TINY</option>
+							<option value="UKR_FONT">UKR</option>-->
+						</select>
+					</div>
+					<div class="break"></div> <!-- break -->
+					<p>Scroll Speed:</p>
+					<div class="slidecontainer">
+						<input type="range" min="1" max="10" value="7" class="slider" id="speed" step="1">
+						<span class="range-thumb" id="demo"></span>
+					</div>
+					<div class="break"></div> <!-- break -->
+					<p>Brightness:</p>
+					<div class="slidecontainer">
+						<input type="range" min="1" max="16" value="4" class="slider" id="brightness" step="1">
+						<span class="range-thumb" id="demo"></span>
+					</div>
+					<div class="break"></div> <!-- break -->
+					<p id="looplaptop">Loop (x Times):</p>
+					<div class="slidecontainer">
+						<input type="range" min="1" max="5" value="1" class="slider" id="loop" step="1">
+						<span class="range-thumb" id="demo"></span>
+					</div>
+					<div class="break"></div> <!-- break -->
+					<p> Vertical Scrolling: </p>
+					<label class="checkmark-container">
+						<input type="checkbox">
+						<span class="checkmark"></span>
+					</label>
+					<div class="break"></div> <!-- break -->
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Settings -->
+	<div class="settings-content-container" id="mobile-hidden">
+		<p> < Settings > </p>
+		<div class="settings-content-container-2">
+			<div style="float:left; width: 40%; height: 100%; margin-left: 5%;">
+				<p style="margin-bottom: 10px;"> < Sprite > </p>
+				<div class="t">
+					<p>Scroll Speed:</p>
+					<div class="slidecontainer">
+						<input type="range" min="1" max="10" value="7" class="slider" id="speed" step="1">
+						<span class="range-thumb" id="demo"></span>
+					</div>
+					<div class="break"></div> <!-- break -->
+					<p>Brightness:</p>
+					<div class="slidecontainer">
+						<input type="range" min="1" max="16" value="4" class="slider" id="brightness" step="1">
+						<span class="range-thumb" id="demo"></span>
+					</div>
+					<div class="break"></div> <!-- break -->
+					<p>Brightness:</p>
+					<div class="slidecontainer">
+						<input type="range" min="1" max="16" value="4" class="slider" id="brightness" step="1">
+						<span class="range-thumb" id="demo"></span>
+					</div>
+					<div class="break"></div> <!-- break -->
+				</div>
+			</div>
+			<div class="settings-line-container">
+				<span class="settings-line line-top"></span>
+				<!--<span class="settings-line line-heart">&#9825;</span>-->
+				<span style="font-size:18px;" class="settings-line line-heart">(ฅ˃ᆺ˂)ฅ</span>
+				<span class="settings-line line-bottom"></span>
+			</div>
+			<div style="float:right; width: 40%; height: 100%; margin-right: 5%;">
+				<p style="margin-bottom: 10px;"> < Text > </p>
+				<div class="t">
+					<p> Font: </p>
+					<div class="font-select">
+						<select>
+							<option class="fonts-cp437" id="CP437" value="CP437_FONT">CP437</option>
+							<option class="fonts-cp437" id="CP437" value="CP437_FONT">CP437</option>
+							<!--<option value="LCD_FONT">LCD</option>
+							<option value="SEG7_FONT">SEG7</option>
+							<option value="SINCLAIR_FONT">SINCLAIR</option>
+							<option value="SPECCY_FONT">SPECCY</option>
+							<option class="fonts-tiny" id="tiny" value="TINY_FONT">TINY</option>
+							<option value="UKR_FONT">UKR</option>-->
+						</select>
+					</div>
+					<div class="break"></div> <!-- break -->
+					<p>Scroll Speed:</p>
+					<div class="slidecontainer">
+						<input type="range" min="1" max="10" value="7" class="slider" id="speed" step="1">
+						<span class="range-thumb" id="demo"></span>
+					</div>
+					<div class="break"></div> <!-- break -->
+					<p>Brightness:</p>
+					<div class="slidecontainer">
+						<input type="range" min="1" max="16" value="4" class="slider" id="brightness" step="1">
+						<span class="range-thumb" id="demo"></span>
+					</div>
+					<div class="break"></div> <!-- break -->
+					<p id="looplaptop">Loop (x Times):</p>
+					<div class="slidecontainer">
+						<input type="range" min="1" max="5" value="1" class="slider" id="loop" step="1">
+						<span class="range-thumb" id="demo"></span>
+					</div>
+					<div class="break"></div> <!-- break -->
+					<p> Vertical Scrolling: </p>
+					<label class="checkmark-container">
+						<input type="checkbox">
+						<span class="checkmark"></span>
+					</label>
+					<div class="break"></div> <!-- break -->
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Sent Message Popup Animation -->
+	<!--
+	<div class="sent-message-overlay" id="overlay">-->
+		<!-- Sprite Animation -->
+		<!-- <div class="sprite-animation">
+			<img src="img/test.gif" alt="Girl in a jacket" id="sending-animation-image" width="100%" height="100%">
+		</div>-->
+		<!-- Loading Animation -->
+		<!-- <div></div>-->
+		<!-- Sent Text -->
+		<!-- <div class="overlay-text" id="overlay-sent-text">SENDING!</div>
+	</div> -->
+</body>
