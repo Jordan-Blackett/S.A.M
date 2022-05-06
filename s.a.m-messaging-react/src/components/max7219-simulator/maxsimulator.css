@@ -1,0 +1,97 @@
+html {
+  --textWhite: #dfe7ef;
+  --darkBackground: #1f272b;
+  --darkOutline: #404c55;
+  --lighterBackground: #2c363b;
+}
+
+.background {
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.25);
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  left: 0;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  transition: all 0.25s ease;
+  width: 100%;
+  z-index: 9;
+}
+
+.background.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.popup-content {
+  background-color: var(--lighterBackground);
+  border-radius: 12px;
+  -webkit-backdrop-filter: blur(0);
+  filter: blur(0);
+  max-width: 400px;
+  min-width: 200px;
+  padding: 0px 25px 25px;
+  transition: all 0.35s ease;
+  z-index: 10;
+  position: relative;
+}
+
+.popup-content.scrolling {
+  max-width: 800px;
+  width: 70vw;
+}
+
+.close-button {
+  fill: var(--textWhite);
+  cursor: pointer;
+  height: 36px;
+  padding: 6px;
+  pointer-events: all;
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  transition: all 0.25s ease;
+  width: 36px;
+}
+
+.matrix-container {
+  align-items: center;
+  background-color: var(--darkBackground);
+  align-items: flex-start;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  border: 2px solid var(--darkOutline);
+  border-radius: 12px;
+  margin: 0 0;
+  padding: 25px 0;
+  position: relative;
+  width: 100%;
+}
+
+.container-header {
+  border: 2px solid var(--darkOutline);
+  border-radius: 12px;
+  color: var(--darkOutline) !important;
+  font-size: 16px !important;
+  font-weight: 700;
+  height: 26px;
+  position: absolute;
+  top: -35px;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  background-color: var(--darkBackground);
+  padding: 0 5px;
+}
+
+.dot {
+  aspect-ratio: 1 / 1;
+  height: 0.8vw;
+  border-radius: 50%;
+  background-color: rgba(255, 118, 118, 0.5);
+  margin: 1.5px 1.5px 1.5px 1.5px;
+}
