@@ -1,0 +1,32 @@
+/* BANNER */
+
+.banner-container {
+  background-color: #332136;
+}
+
+.banner-container h1 {
+  font-size: 115px;
+  font-weight: bold;
+  color: var(--text-color);
+  overflow: hidden;
+}
+
+/* Banner title dots */
+.banner-container span {
+  font-size: 105px;
+  color: var(--seconary-text-color);
+}
+
+.banner-container h2 {
+  font-size: 20px;
+  color: var(--seconary-text-color);
+  padding-bottom: 20px;
+}
+
+.banner-version {
+  font-size: 30px;
+  color: var(--text-color);
+  background-color: #1b1b1b;
+  padding: 6px 0px;
+}
+

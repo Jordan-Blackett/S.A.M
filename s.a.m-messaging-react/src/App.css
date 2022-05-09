@@ -1,43 +1,73 @@
-html {
-  background-color: #1f1f1f;
-  color: #ffffffff;
+@font-face {
+  font-family: Quicksand;
+  src: url("./assets/fonts/quicksand/static/Quicksand-Regular.ttf") format("TrueType");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: Quicksand;
+  src: url("./assets/fonts/quicksand/static/Quicksand-SemiBold.ttf")
+    format("TrueType");
+  font-weight: bold;
+  font-style: normal;
+}
+
+:root {
+  /* Theme */
+
+  /* Background */
+  --banner-background-color: #332136;
+  --main-background-color: #f6b5ff; /* Pink */
+  --seconary-background-color: #181818; /* Black */
+  --background-image: url(./assets/images/60-lines.png);
+
+  /* Theme */
+  --primary-theme-color-unfocused: #e0c8cd;
+  --primary-theme-color-focused: #fccfd9;
+  --seconary-theme-color: #1111;
+  --text-color: #e7c0c9;
+  --seconary-text-color: #9e445b;
+  --text-box-text-color: #1111;
+  --settings-text-color: #1111;
+  --shadow-color: #719ece;
+
+  --current-font: Quicksand;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: Quicksand;
+  color: var(--text-color);
 }
 
 .App {
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+body {
+  background-color: var(--main-background-color);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+/* SPRITE AND TEXT */
+
+.sprite-text-content-container {
+  height: 825px; /* TODO: */
+  background-color: var(--main-background-color);
+  background-image: var(--background-image);
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.sprite-content-container {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  float: left;
+  width: 50%;
+  height: 100%;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.text-content-container {
+  display: flex;
+  float: right;
+  width: 50%;
+  height: 100%;
 }

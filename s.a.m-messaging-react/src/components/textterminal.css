@@ -1,0 +1,42 @@
+/* TEXT BOX */
+
+.text-box-container {
+  margin: 4%;
+  width: 100%;
+  /*position: relative;*/
+  border: 3px solid var(--primary-theme-color-unfocused);
+  border-radius: 8px;
+  background-color: var(--seconary-background-color);
+  box-shadow: 0 0 10px var(--shadow-color);
+}
+
+.text-box-container:focus-within {
+  outline: none !important;
+  border: 4px solid #fccfd9; /* TODO: var */
+}
+
+.text-box-container p {
+  font-size: 40px;
+  color: var(--text-color);
+  margin: 2%;
+  text-align: center;
+}
+
+.text-box {
+  margin: 4%;
+  font-size: 30px;
+  /*position: relative;
+  top: 4%;*/
+  width: 92%; /* width - (margin*2) */
+  height: 84%;
+  border: hidden;
+  color: var(--seconary-text-color);
+  background-color: rgba(100, 100, 100, 0);
+  font-family: var(--current-font);
+  resize: none;
+}
+
+.text-box:focus {
+  outline: none !important;
+  border: hidden;
+}
