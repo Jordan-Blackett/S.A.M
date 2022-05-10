@@ -53,7 +53,9 @@ body {
 /* SPRITE AND TEXT */
 
 .sprite-text-content-container {
-  height: 825px; /* TODO: */
+  display: flex;
+  /*overflow: hidden;*/
+  max-height: 70vh;
   background-color: var(--main-background-color);
   background-image: var(--background-image);
 }
@@ -61,13 +63,15 @@ body {
 .sprite-content-container {
   display: flex;
   float: left;
+  aspect-ratio: 1 / 1;
   width: 50%;
-  height: 100%;
+  /*position: relative;*/
 }
 
 .text-content-container {
   display: flex;
   float: right;
+  aspect-ratio: 1 / 1;
   width: 50%;
-  height: 100%;
+  position: relative;
 }

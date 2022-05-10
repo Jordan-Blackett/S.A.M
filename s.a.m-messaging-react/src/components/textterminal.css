@@ -2,12 +2,14 @@
 
 .text-box-container {
   margin: 4%;
-  width: 100%;
-  /*position: relative;*/
+  margin-left: 6%;
+  aspect-ratio: 1 / 1;
+  max-width: 100%;
   border: 3px solid var(--primary-theme-color-unfocused);
   border-radius: 8px;
   background-color: var(--seconary-background-color);
   box-shadow: 0 0 10px var(--shadow-color);
+  /*position: relative;*/
 }
 
 .text-box-container:focus-within {
