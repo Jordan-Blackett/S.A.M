@@ -1,0 +1,22 @@
+.send-button {
+    text-align: center;
+    background-color: var(--seconary-background-color);
+    border: 3px solid var(--primary-theme-color-unfocused);
+    border-radius: 8px;
+    padding: 5px 15px;
+    font-size: 35px;
+    color: var(--text-color);
+    box-shadow: 0 0 10px var(--shadow-color);
+    outline: none;
+    cursor: pointer;
+  }
+  
+  .send-button:hover {
+    background-color: #141414;
+    border: 3px solid var(--primary-theme-color-focused);
+  }
+  
+  .send-button:active {
+    transform: translateY(4px);
+  }
+  
