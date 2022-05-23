@@ -1,31 +1,33 @@
 /* BANNER */
 
-.banner-container {
-  background-color: #332136;
+.banner {
+  background-color: var(--banner-background-color);
 }
 
-.banner-container h1 {
+.banner h1 {
   font-size: 115px;
   font-weight: bold;
   color: var(--text-color);
   overflow: hidden;
 }
 
-/* Banner title dots */
-.banner-container span {
+.banner span {
+  /* Banner title dots */
   font-size: 105px;
   color: var(--seconary-text-color);
+  /*background: none;
+	padding-bottom: 0px;*/
 }
 
-.banner-container h2 {
-  font-size: 20px;
-  color: var(--seconary-text-color);
-  padding-bottom: 20px;
-}
-
-.banner-version {
+.banner p {
   font-size: 30px;
   color: var(--text-color);
-  background-color: #1b1b1b;
-  padding: 6px 0px;
+  background-color: #181818;
+  padding: 4px 0px;
+}
+
+.banner h2 {
+  font-size: 20px;
+  color: var(--seconary-text-color);
+  padding-bottom: 1%;
 }

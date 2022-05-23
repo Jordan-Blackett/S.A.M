@@ -1,6 +1,7 @@
 @font-face {
   font-family: Quicksand;
-  src: url("./assets/fonts/quicksand/static/Quicksand-Regular.ttf") format("TrueType");
+  src: url("./assets/fonts/quicksand/static/Quicksand-Regular.ttf")
+    format("TrueType");
   font-weight: normal;
   font-style: normal;
 }
@@ -14,7 +15,6 @@
 
 :root {
   /* Theme */
-
   /* Background */
   --banner-background-color: #332136;
   --main-background-color: #f6b5ff; /* Pink */
@@ -24,14 +24,10 @@
   /* Theme */
   --primary-theme-color-unfocused: #e0c8cd;
   --primary-theme-color-focused: #fccfd9;
-  --seconary-theme-color: #1111;
   --text-color: #e7c0c9;
   --seconary-text-color: #9e445b;
-  --text-box-text-color: #1111;
-  --settings-text-color: #1111;
+  --text-box-text-color: #181818;
   --shadow-color: #719ece;
-
-  --current-font: Quicksand;
 }
 
 * {
@@ -44,67 +40,4 @@
 
 .App {
   text-align: center;
-}
-
-body {
-  background-color: var(--main-background-color);
-}
-
-/* SPRITE AND TEXT */
-
-.sprite-text-content-container {
-  display: flex;
-  /*overflow: hidden;*/
-  max-height: 70vh;
-  background-color: var(--main-background-color);
-  background-image: var(--background-image);
-}
-
-.sprite-content-container {
-  display: flex;
-  float: left;
-  aspect-ratio: 1 / 1;
-  width: 50%;
-  /*position: relative;*/
-}
-
-.text-content-container {
-  display: flex;
-  float: right;
-  aspect-ratio: 1 / 1;
-  width: 50%;
-  position: relative;
-}
-
-/* Send Buttons */
-
-.send-button-container {
-  height: 50px;
-}
-
-.send-button-container-primary-background {
-  background-color: var(--main-background-color);
-  background-image: var(--background-image);
-  width: 100%;
-  height: 50%;
-}
-
-.send-button-container-secondary-background {
-  background-color: var(--seconary-background-color);
-  width: 100%;
-  height: 50%;
-}
-
-.send-button-container-sprite {
-  transform: translate(0%, -50%);
-  float: left;
-  margin-left: 10%;
-  width: 40%;
-}
-
-.send-button-container-text {
-  transform: translate(0%, -50%);
-  float: right;
-  margin-right: 10%;
-  width: 40%;
 }

@@ -7,14 +7,14 @@
   max-width: 100%;
   border: 3px solid var(--primary-theme-color-unfocused);
   border-radius: 8px;
-  background-color: var(--seconary-background-color);
+  background-color: var(--text-box-text-color);
   box-shadow: 0 0 10px var(--shadow-color);
   /*position: relative;*/
 }
 
 .text-box-container:focus-within {
   outline: none !important;
-  border: 4px solid #fccfd9; /* TODO: var */
+  border: 4px solid var(--primary-theme-color-focused);
 }
 
 .text-box-container p {

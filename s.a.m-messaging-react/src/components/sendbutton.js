@@ -1,8 +1,8 @@
 import "./sendbutton.css";
 
-function SendButton() {
+function SendButton(props) {
   return (
-    <button type="button" className="send-button" id="send-message-button">
+    <button className="send-button" onClick={props.onClick}>
       Send!
     </button>
   );

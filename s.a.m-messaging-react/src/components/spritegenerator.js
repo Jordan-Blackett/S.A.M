@@ -1,47 +1,47 @@
-import { useState } from "react";
+import React from "react";
 import "./spritegenerator.css";
 
-function SpriteGenerator() {
-  // --- Draw Sprite Table ----
-
-  //function CreateTable() {
-  const rows = 8;
-  const cols = 8;
-  const spritegrid = [];
-
-  // Create Table
-  for (let i = 0; i < rows; i++) {
-    const tableColumn = [];
-    for (let j = 0; j < cols; j++) {
-      tableColumn.push(
-        <>
-          <SpriteSquare />
-        </>
-      );
-    }
-    spritegrid.push(<div style={{ display: "flex" }}>{tableColumn}</div>);
+class SpriteGenerator extends React.Component {
+  renderSquare(i) {
+    return (
+      <SpriteSquare
+        value={this.props.sprite[i]}
+        onClick={() => this.props.onClick(i)}
+      />
+    );
   }
-  //}
 
-  return (
-    <div className="sprite-generator-container">
-      <div className="spritesquare-container">{spritegrid}</div>
-    </div>
-  );
+  render() {
+    // --- Draw Sprite Table ----
+    const rows = 8;
+    const cols = 8;
+    const spritegrid = [];
+
+    let index = 0;
+    // Create Table
+    for (let i = 0; i < rows; i++) {
+      const tableColumn = [];
+      for (let j = 0; j < cols; j++) {
+        tableColumn.push(<>{this.renderSquare(index)}</>);
+        index += 1;
+      }
+      spritegrid.push(<div style={{ display: "flex" }}>{tableColumn}</div>);
+    }
+
+    return (
+      <div className="sprite-generator-container">
+        <div className="spritesquare-container">{spritegrid}</div>
+      </div>
+    );
+  }
 }
 
-function SpriteSquare() {
-  const [isActive, setActive] = useState("");
-
-  function test() {
-    setActive(!isActive);
-  }
-
+function SpriteSquare(props) {
   return (
-    <div
-      className={isActive ? "spritesquare active" : "spritesquare"}
-      onClick={test}
-    ></div>
+    <button
+      className={props.value ? "spritesquare active" : "spritesquare"}
+      onClick={props.onClick}
+    ></button>
   );
 }
 

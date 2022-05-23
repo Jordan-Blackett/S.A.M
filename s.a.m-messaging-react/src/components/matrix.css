@@ -1,0 +1,130 @@
+/* SPRITE AND TEXT */
+
+.sprite-text-content-container {
+    display: flex;
+    /*overflow: hidden;*/
+    max-height: 70vh;
+    background-color: var(--main-background-color);
+    background-image: var(--background-image);
+    /*padding-bottom: 20px;*/
+  }
+  
+  .sprite-content-container {
+    display: flex;
+    float: left;
+    aspect-ratio: 1 / 1;
+    width: 50%;
+  }
+  
+  .text-content-container {
+    display: flex;
+    float: right;
+    aspect-ratio: 1 / 1;
+    width: 50%;
+    position: relative;
+  }
+  
+  /* SETTINGS */
+  
+  .settings-content-container {
+    background-color: #181818;
+  }
+  
+  .settings-content-container p {
+    font-size: 30px;
+  }
+  
+  .settings-content-container-2 {
+    display: flex;
+  }
+  
+  .settings-content-container-2 p {
+    font-size: 20px;
+  }
+  
+  .settings-content-container-sprite {
+    float: left;
+    margin-left: 5%;
+    width: 40%;
+  }
+  
+  .settings-content-container-text {
+    float: right;
+    margin-right: 5%;
+    width: 40%;
+  }
+  
+  /* Settings Separator */
+  
+  .settings-line-container {
+    float: left;
+    width: 10%;
+    position: relative;
+  }
+  
+  .settings-line {
+    height: 35%;
+    width: 2px;
+    position: absolute;
+    left: 50%;
+  }
+  
+  .line-top {
+    background-color: #e0c8cd;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
+  }
+  
+  .line-bottom {
+    background-color: #e0c8cd;
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translate(-50%, 0);
+  }
+  
+  .line-center {
+    color: #e0c8cd;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    font-size: 10px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
+  /* */
+  
+  .send-button-container {
+    height: 50px;
+  }
+  
+  .send-button-container-primary-background {
+    background-color: var(--main-background-color);
+    background-image: var(--background-image);
+    width: 100%;
+    height: 50%;
+  }
+  
+  .send-button-container-secondary-background {
+    background-color: var(--seconary-background-color);
+    width: 100%;
+    height: 50%;
+  }
+  
+  .send-button-container-sprite {
+    transform: translate(0%, -50%);
+    float: left;
+    margin-left: 4%;
+    width: 46%;
+  }
+  
+  .send-button-container-text {
+    transform: translate(0%, -50%);
+    float: right;
+    margin-right: 4%;
+    width: 46%;
+  }  
